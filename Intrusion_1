@@ -1,0 +1,13 @@
+Apres avoir trouve les urls possible on trouve un forum,
+dedant il y a un post de l'utilisateur lmezard qui a un soucis de login
+en examinant son post qui contient des logs du serveur, on se rend compte qu'il ne met pas son username dans le bon champs
+jusqu'a se tromper et y ecrire son mot de pass: !q\]Ej?*5K5cy*AJ
+
+On peut maintenant se connecter en tant que avec son compte
+
+username: lmezard
+password: !q\]Ej?*5K5cy*AJ
+
+En se connectant trouve aussi son email: laurie@borntosec.net
+
+Celle-ci nous permet de nous connecte sur l'url /webmail avec le meme password

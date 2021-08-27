@@ -37,3 +37,8 @@ mirroring https://192.168.1.56/forum/ https://192.168.1.56/webmail/src/read_body
 Done.
 Thanks for using HTTrack!
 * 
+
+=> Maintenant qu'on a la copie du site web nous pouvons le lancer avec firefox oo chrome
+cmd: 
+    cd mirror_result
+    firefox index.html
