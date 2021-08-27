@@ -55,10 +55,16 @@ nikto -h 192.168.1.56 -p 21,22,80,143,443,993
 + Cookie SQMSESSID created without the httponly flag
 + OSVDB-3093: /webmail/src/read_body.php: SquirrelMail found
 + Server may leak inodes via ETags, header found with file /icons/README, inode: 47542, size: 5108, mtime: Tue Aug 28 12:48:10 2007
-+ OSVDB-3233: /icons/README: Apache default file found.
++ OSVDB-3233: /icons/R/forum/EADME: Apache default file found.
 + /phpmyadmin/: phpMyAdmin directory found
 + OSVDB-3092: /phpmyadmin/Documentation.html: phpMyAdmin is for managing MySQL databases, and should be protected or limited to authorized hosts.
 + 17643 requests: 0 error(s) and 24 item(s) reported on remote host
 + End Time:           2021-08-27 17:15:58 (GMT2) (319 seconds)
 ---------------------------------------------------------------------------
 + 2 host(s) tested
+
+=> On trouve des urls:
+https://192.168.1.56/forum/
+https://192.168.1.56/webmail/src/read_body.php 
+https://192.168.1.56/icons/R/forum/EADME 
+https://192.168.1.56/phpmyadmin/Documentation.html
