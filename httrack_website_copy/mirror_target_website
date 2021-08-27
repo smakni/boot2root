@@ -1,0 +1,39 @@
+=> cmd: httrack   
+
+Welcome to HTTrack Website Copier (Offline Browser) 3.49-2+libhtsjava.so.2
+Copyright (C) 1998-2017 Xavier Roche and other contributors
+To see the option list, enter a blank line or try httrack --help
+
+Enter project name :boot2root_copy
+
+Base path (return=/home/sab/websites/) :
+
+Enter URLs (separated by commas or blank spaces) :https://192.168.1.56/forum/ https://192.168.1.56/webmail/src/read_body.php https://192.168.1.56/icons/R/forum/EADME https://192.168.1.56/phpmyadmin/Documentation.html
+
+Action:
+(enter) 1       Mirror Web Site(s)
+        2       Mirror Web Site(s) with Wizard
+        3       Just Get Files Indicated
+        4       Mirror ALL links in URLs (Multiple Mirror)
+        5       Test Links In URLs (Bookmark Test)
+        0       Quit
+: 1
+
+Proxy (return=none) :
+
+You can define wildcards, like: -*.gif +www.*.com/*.zip -*img_*.zip
+Wildcards (return=none) :
+
+You can define additional options, such as recurse level (-r<number>), separated by blank spaces
+To see the option list, type help
+Additional options (return=none) :
+
+---> Wizard command line: httrack https://192.168.1.56/forum/ https://192.168.1.56/webmail/src/read_body.php https://192.168.1.56/icons/R/forum/EADME https://192.168.1.56/phpmyadmin/Documentation.html  -O "/home/sab/websites/boot2root_copy"  -%v  
+
+Ready to launch the mirror? (Y/n) :y
+
+Mirror launched on Fri, 27 Aug 2021 17:46:58 by HTTrack Website Copier/3.49-2+libhtsjava.so.2 [XR&CO'2014]
+mirroring https://192.168.1.56/forum/ https://192.168.1.56/webmail/src/read_body.php https://192.168.1.56/icons/R/forum/EADME https://192.168.1.56/phpmyadmin/Documentation.html with the wizard help..
+Done.
+Thanks for using HTTrack!
+* 

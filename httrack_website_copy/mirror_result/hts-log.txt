@@ -1,0 +1,19 @@
+HTTrack3.49-2+libhtsjava.so.2 launched on Fri, 27 Aug 2021 17:46:58 at https://192.168.1.56/forum/ https://192.168.1.56/webmail/src/read_body.php https://192.168.1.56/icons/R/forum/EADME https://192.168.1.56/phpmyadmin/Documentation.html
+(winhttrack https://192.168.1.56/forum/ https://192.168.1.56/webmail/src/read_body.php https://192.168.1.56/icons/R/forum/EADME https://192.168.1.56/phpmyadmin/Documentation.html -O "/home/sab/websites/boot2root_copy" -%v )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+17:47:31	Warning: 	Link https://192.168.1.56/webmail/src/read_body.php not scanned (follow robots meta tag)
+17:47:31	Error: 	"Not Found" (404) at link https://192.168.1.56/icons/R/forum/EADME (from primary/primary)
+17:48:43	Warning: 	Link https://192.168.1.56/phpmyadmin/changelog.php not scanned (follow robots meta tag)
+17:48:44	Warning: 	Link https://192.168.1.56/phpmyadmin/license.php not scanned (follow robots meta tag)
+17:48:44	Error: 	"Authorization Required" (401) at link https://192.168.1.56/phpmyadmin/setup/ (from https://192.168.1.56/phpmyadmin/Documentation.html)
+17:48:45	Warning: 	Link https://192.168.1.56/phpmyadmin/index.php not scanned (follow robots meta tag)
+17:48:45	Error: 	"Not Found" (404) at link https://192.168.1.56/phpmyadmin/LICENSE (from https://192.168.1.56/phpmyadmin/Documentation.html)
+17:49:54	Error: 	"Not Found" (404) at link https://192.168.1.56/phpmyadmin/themes/pmahomme/jquery/images/ui-anim_basic_16x16.gif (from https://192.168.1.56/phpmyadmin/themes/pmahomme/jquery/jquery-ui-1.8.custom.css)
+
+HTTrack Website Copier/3.49-2 mirror complete in 3 minutes 0 seconds : 147 links scanned, 142 files written (1166188 bytes overall) [400346 bytes received at 2224 bytes/sec], 1089886 bytes transferred using HTTP compression in 115 files, ratio 23%, 45.2 requests per connection
+(4 errors, 4 warnings, 0 messages)

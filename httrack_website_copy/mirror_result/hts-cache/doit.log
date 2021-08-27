@@ -1,0 +1,8 @@
+https://192.168.1.56/forum/ https://192.168.1.56/webmail/src/read_body.php https://192.168.1.56/icons/R/forum/EADME https://192.168.1.56/phpmyadmin/Documentation.html -O "/home/sab/websites/boot2root_copy" -%v
+File generated automatically on Fri, 27 Aug 2021 17:46:58, do NOT edit
+
+To update a mirror, just launch httrack without any parameters
+The existing cache will be used (and modified)
+To have other options, retype all parameters and launch HTTrack
+To continue an interrupted mirror, just launch httrack without any parameters
+
