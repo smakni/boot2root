@@ -1,0 +1,32 @@
+=> cmd: ifconfig
+
+eth0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 54:e1:ad:20:96:92  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 16  memory 0xec300000-ec320000  
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 29161  bytes 1804496 (1.7 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 29161  bytes 1804496 (1.7 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.1.45  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet6 fdaa:bbcc:ddee:0:84c8:7051:77f9:8acb  prefixlen 128  scopeid 0x0<global>
+        inet6 fdaa:bbcc:ddee:0:228:f8ff:feab:51bc  prefixlen 64  scopeid 0x0<global>
+        inet6 fdaa:bbcc:ddee:0:f6e6:38e6:fe13:11e0  prefixlen 64  scopeid 0x0<global>
+        inet6 fe80::228:f8ff:feab:51bc  prefixlen 64  scopeid 0x20<link>
+        ether 00:28:f8:ab:51:bc  txqueuelen 1000  (Ethernet)
+        RX packets 260964  bytes 106370032 (101.4 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 331233  bytes 60782426 (57.9 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+Ici on trouve l'adresse ip de notre machine (192.168.1.45), maintenant nous allons faire un scan sur tout le subnet avec nmap

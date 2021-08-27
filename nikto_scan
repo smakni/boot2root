@@ -1,0 +1,64 @@
+nikto -h 192.168.1.56 -p 21,22,80,143,443,993
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ No web server found on 192.168.1.56:22
+---------------------------------------------------------------------------
++ No web server found on 192.168.1.56:143
+---------------------------------------------------------------------------
++ No web server found on 192.168.1.56:993
+---------------------------------------------------------------------------
++ Target IP:          192.168.1.56
++ Target Hostname:    192.168.1.56
++ Target Port:        80
++ Start Time:         2021-08-27 17:09:30 (GMT2)
+---------------------------------------------------------------------------
++ Server: Apache/2.2.22 (Ubuntu)
++ Server may leak inodes via ETags, header found with file /, inode: 13650, size: 1025, mtime: Thu Oct  8 01:37:54 2015
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ Apache/2.2.22 appears to be outdated (current is at least Apache/2.4.37). Apache 2.2.34 is the EOL for the 2.x branch.
++ Allowed HTTP Methods: OPTIONS, GET, HEAD, POST 
++ OSVDB-3233: /icons/README: Apache default file found.
++ 8738 requests: 0 error(s) and 7 item(s) reported on remote host
++ End Time:           2021-08-27 17:10:39 (GMT2) (69 seconds)
+---------------------------------------------------------------------------
++ Target IP:          192.168.1.56
++ Target Hostname:    192.168.1.56
++ Target Port:        443
+---------------------------------------------------------------------------
++ SSL Info:        Subject:  /CN=BornToSec
+                   Ciphers:  ECDHE-RSA-AES256-GCM-SHA384
+                   Issuer:   /CN=BornToSec
++ Start Time:         2021-08-27 17:10:39 (GMT2)
+---------------------------------------------------------------------------
++ Server: Apache/2.2.22 (Ubuntu)
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The site uses SSL and the Strict-Transport-Security HTTP header is not defined.
++ The site uses SSL and Expect-CT header is not present.
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ All CGI directories 'found', use '-C none' to test none
++ Apache/2.2.22 appears to be outdated (current is at least Apache/2.4.37). Apache 2.2.34 is the EOL for the 2.x branch.
++ The Content-Encoding header is set to deflate this may mean that the server is vulnerable to the BREACH attack.
++ Hostname '192.168.1.56' does not match certificate's names: BornToSec
++ Allowed HTTP Methods: OPTIONS, GET, HEAD, POST 
++ Retrieved x-powered-by header: PHP/5.3.10-1ubuntu3.20
++ Cookie PHPSESSID created without the secure flag
++ Cookie PHPSESSID created without the httponly flag
++ Cookie mlf2_usersettings created without the secure flag
++ Cookie mlf2_usersettings created without the httponly flag
++ Cookie mlf2_last_visit created without the secure flag
++ Cookie mlf2_last_visit created without the httponly flag
++ OSVDB-3092: /forum/: This might be interesting...
++ Cookie SQMSESSID created without the secure flag
++ Cookie SQMSESSID created without the httponly flag
++ OSVDB-3093: /webmail/src/read_body.php: SquirrelMail found
++ Server may leak inodes via ETags, header found with file /icons/README, inode: 47542, size: 5108, mtime: Tue Aug 28 12:48:10 2007
++ OSVDB-3233: /icons/README: Apache default file found.
++ /phpmyadmin/: phpMyAdmin directory found
++ OSVDB-3092: /phpmyadmin/Documentation.html: phpMyAdmin is for managing MySQL databases, and should be protected or limited to authorized hosts.
++ 17643 requests: 0 error(s) and 24 item(s) reported on remote host
++ End Time:           2021-08-27 17:15:58 (GMT2) (319 seconds)
+---------------------------------------------------------------------------
++ 2 host(s) tested

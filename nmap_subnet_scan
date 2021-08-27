@@ -1,0 +1,51 @@
+=> cmd: nmap 192.168.1.0/24
+
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-08-27 17:32 CEST
+Nmap scan report for 192.168.1.4
+Host is up (0.0040s latency).
+All 1000 scanned ports on 192.168.1.4 are closed
+
+Nmap scan report for 192.168.1.5
+Host is up (0.0097s latency).
+Not shown: 996 closed ports
+PORT     STATE SERVICE
+8008/tcp open  http
+8009/tcp open  ajp13
+8443/tcp open  https-alt
+9000/tcp open  cslistener
+
+Nmap scan report for 192.168.1.44
+Host is up (0.0054s latency).
+Not shown: 999 closed ports
+PORT      STATE SERVICE
+62078/tcp open  iphone-sync
+
+Nmap scan report for 192.168.1.45
+Host is up (0.000017s latency).
+All 1000 scanned ports on 192.168.1.45 are closed
+
+Nmap scan report for 192.168.1.56
+Host is up (0.0080s latency).
+Not shown: 994 closed ports
+PORT    STATE SERVICE
+21/tcp  open  ftp
+22/tcp  open  ssh
+80/tcp  open  http
+143/tcp open  imap
+443/tcp open  https
+993/tcp open  imaps
+
+Nmap scan report for bouygues (192.168.1.254)
+Host is up (0.0018s latency).
+Not shown: 846 closed ports, 148 filtered ports
+PORT      STATE SERVICE
+53/tcp    open  domain
+80/tcp    open  http
+443/tcp   open  https
+445/tcp   open  microsoft-ds
+9000/tcp  open  cslistener
+49152/tcp open  unknown
+
+Nmap done: 256 IP addresses (6 hosts up) scanned in 17.96 seconds
+
+=> On a maintenant toutes les machines connectees sur notre reseau, on trouve l'ip de notre vm (192.168.1.56) et on comprend que c'est un serveur grace aux ports ouverts nottament le 80 et 443
