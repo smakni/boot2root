@@ -203,3 +203,51 @@ local: fun remote: fun
 808960 bytes received in 0.11 secs (6.9712 MB/s)
 ftp> quit
 221 Goodbye.
+
+On a maintenant les fichier README et fun
+
+$ cat README
+Complete this little challenge and use the result as password for user 'laurie' to login in ssh
+
+Pour le fichier fun:
+On voit au début un nom dossier ft_fun et une liste de fichier ex: ft_fun/331ZU.pcap
+Après l'avoir rendu plus lisible on comprends que les fichiers contiennent des parties de code qui se suivent en allant sur le fichier indiqué la fin
+On peut donc reconstruire les fonctions getme manquantes en cherchant chaque nom (getme1) puis sont fichier de suite
+cf fun_getme_reconstruction.txt
+
+$ gcc fun_code.c
+$ ./a.out       
+MY PASSWORD IS: Iheartpwnage
+Now SHA-256 it and submit%
+
+HASH => 330b845f32185747e4f8ca15d40ca59796035c89ea809fb5d30f4da83ecf45a4
+
+Now we should be able to connect with shh as laurie
+
+$ ssh laurie@192.168.1.56
+        ____                _______    _____
+       |  _ \              |__   __|  / ____|
+       | |_) | ___  _ __ _ __ | | ___| (___   ___  ___
+       |  _ < / _ \| '__| '_ \| |/ _ \\___ \ / _ \/ __|
+       | |_) | (_) | |  | | | | | (_) |___) |  __/ (__
+       |____/ \___/|_|  |_| |_|_|\___/_____/ \___|\___|
+
+                       Good luck & Have fun
+laurie@192.168.1.56's password:
+laurie@BornToSecHackMe:~$ ls
+bomb  README
+laurie@BornToSecHackMe:~$ cat README
+Diffuse this bomb!
+When you have all the password use it as "thor" user with ssh.
+
+HINT:
+P
+ 2
+ b
+
+o
+4
+
+NO SPACE IN THE PASSWORD (password is case sensitive).
+
+
