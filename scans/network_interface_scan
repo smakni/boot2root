@@ -29,4 +29,5 @@ wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX packets 331233  bytes 60782426 (57.9 MiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
-Ici on trouve l'adresse ip de notre machine (192.168.1.45), maintenant nous allons faire un scan sur tout le subnet avec nmap
+=>	Ici on trouve l'adresse ip de notre machine (192.168.1.45)
+    Maintenant nous allons faire un scan sur tout le subnet avec nmap pour trouver toutes les autres connectées sur le même réseau

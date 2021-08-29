@@ -49,3 +49,22 @@ PORT      STATE SERVICE
 Nmap done: 256 IP addresses (6 hosts up) scanned in 17.96 seconds
 
 => On a maintenant toutes les machines connectees sur notre reseau, on trouve l'ip de notre vm (192.168.1.56) et on comprend que c'est un serveur grace aux ports ouverts nottament le 80 et 443
+
+Pour plus d'info
+=> cmd: nmap 192.168.1.56 -sV
+
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-08-29 18:22 CEST
+Nmap scan report for 192.168.1.56
+Host is up (0.0069s latency).
+Not shown: 994 closed ports
+PORT    STATE SERVICE    VERSION
+21/tcp  open  ftp        vsftpd 2.0.8 or later
+22/tcp  open  ssh        OpenSSH 5.9p1 Debian 5ubuntu1.7 (Ubuntu Linux; protocol 2.0)
+80/tcp  open  http       Apache httpd 2.2.22 ((Ubuntu))
+143/tcp open  imap       Dovecot imapd
+443/tcp open  ssl/http   Apache httpd 2.2.22
+993/tcp open  ssl/imaps?
+Service Info: Host: 127.0.1.1; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 13.27 seconds
