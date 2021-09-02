@@ -251,4 +251,13 @@ o
 
 NO SPACE IN THE PASSWORD (password is case sensitive).
 
+$ ./bomb
+Welcome this is my little bomb !!!! You have 6 stages with
+only one life good luck !! Have a nice day!
+Public speaking is very easy.
+Phase 1 defused. How about the next one?
+1 2 6 24 120 720
+That's number 2.  Keep going!
+1 b 214
+Halfway there!
 

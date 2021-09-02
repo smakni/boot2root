@@ -221,6 +221,55 @@ void phase_3(char *param_1)
 	return;
 }
 
+int func4(int param_1)
+//	test param = 2
+{
+	int iVar1;
+	int iVar2;
+
+	if (param_1 < 2)
+	{
+		iVar2 = 1;
+	}
+	else
+	{
+		iVar1 = func4(param_1 + -1);
+		// x  = f....(2       + -1)	
+		iVar2 = func4(param_1 + -2);
+		// y  = f....(2       + -2)	
+		iVar2 = iVar2 + iVar1;
+		// y  = y + x
+	}
+	return iVar2;
+	//  => 55
+}
+
+int func4(int param_1)
+//	test param = 2
+{
+	int iVar1;
+	int iVar2;
+
+	if (param_1 < 2)
+	{
+		iVar2 = 1;
+	}
+	else
+	{
+		iVar1 = func4(param_1 + -1);
+		// x  = func4(param_1 + -1);
+		iVar2 = func4(param_1 + -2);
+		// y  = func4(param_1 + -2);
+
+		iVar2 = iVar2 + iVar1;
+		
+		// y =  func4(param_1 + -2)	+ func4(param_1 + -1)
+		// y  = y + x
+	}
+	return iVar2;
+	//  => 55
+}
+
 void phase_4(char *param_1)
 
 {
