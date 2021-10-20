@@ -1,3 +1,5 @@
+// http://zpalexander.com/binary-bomb-lab-phase-6/
+
 // (gdb) disas phase_6
 // Dump of assembler code for function phase_6:
 //    0x08048d98 <+0>:	push   ebp
@@ -108,7 +110,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int node1 = {-3,0,0,0,1,0};
+int node1[] = {-3,0,0,0,1,0};
 
 void explode_bomb() {
 	printf("BOMB EXPLODE");
@@ -126,37 +128,53 @@ void phase_6(int *param_1)
 	int *local_34[6];
 	int *local_1c = param_1;
 
-	local_38 = &node1; // -3	 0	0	0	1	0
+	local_38 = node1; // -3 0	0	0	1	0
 
 	// read_six_numbers(param_1, (int)local_1c);
 	
 	iVar4 = 0;
-	do
-	{
+	
+	while (iVar4 < 6) {
+		printf("LOOP_1 %d \n", iVar4);
+		printf("iVar4 = [%d]\n", iVar4);
+		printf("local_1c[%d] => %d\n", iVar4, local_1c[iVar4]);
 		if (5 < local_1c[iVar4] - 1U)	// mes inputs - 1 doivent etre inferrieur ou égale à 5
 		{
+			printf("ERROR_1\n");
 			explode_bomb();
 		}
 		iVar2 = iVar4 + 1;
+		// printf("iVar2 = [%d]\n", iVar2);
 		if (iVar2 < 6)
 		{
 			do
 			{
+				// printf("LOOP_2\n");
+				// if (local_1c[iVar2]) printf("local_1c[%d] => %d\n", iVar2, local_1c[iVar2]);
 				if (local_1c[iVar4] == local_1c[iVar2])	// check mon imput i | i + 1, aucun chiffre ne peut etre en double
 				{
+					printf("ERROR_2\n");
 					explode_bomb();
 				}
 				iVar2 = iVar2 + 1;
 			} while (iVar2 < 6);
 		}
 		iVar4 = iVar4 + 1;
-	} while (iVar4 < 6);
+		// printf("%d<|\n", iVar4);
+		// printf("<|\n");
+		printf("<|\n");
+	}
 	
+	printf("FIRST LOOP OK [%d] \n", local_38[0]);
+
 	iVar4 = 0;
 	do
 	{
 		iVar2 = 1;
 		piVar3 = (int *)local_38;
+		printf("piVar3 %d \n", piVar3[0]);
+		printf("LOOP_3 %d \n", local_38[0]);
+		
 		if (1 < local_1c[iVar4])
 		{
 			do
@@ -185,6 +203,7 @@ void phase_6(int *param_1)
 	{
 		if (*local_34[0] < *(int *)local_34[0][2])
 		{
+			printf("ERROR_3\n");
 			explode_bomb();
 		}
 		local_34[0] = (int *)local_34[0][2];
@@ -194,8 +213,8 @@ void phase_6(int *param_1)
 }
 
 int main() {
-	int test = {4, 1, 2, 3, 5, 6};
-	int test2 = {4, 2, 6, 3, 1, 5};
-	phase_6(&test2);
+	int test[] = {4, 1, 2, 3, 5, 6};
+	int test2[] = {4, 2, 6, 3, 1, 5};
+	phase_6(test2);
 	printf("OK");
 }

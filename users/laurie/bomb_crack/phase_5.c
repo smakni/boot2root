@@ -116,7 +116,6 @@ void phase_5_crack()
 			}
 			if (result[i] == local_c) {
 				printf("result[i] == %c | %c == str[ %c & 0xf ]\n", result[i], local_c, test);
-				break;
 			}
 			test++;
 		}

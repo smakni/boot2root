@@ -23,8 +23,8 @@ int main(int ac, char **av) {
 	int i = 0;
 
 	while (func4(i) != 55) {
-		printf("phase_4 test whith %d\n", i);
+		printf("phase_4 test with %d\n", i);
 		i++;
 	}
-	printf("\nfunc4(i) == 55 whith i => %d\n", i);
+	printf("\nfunc4(i) == 55 with i => %d\n", i);
 }
