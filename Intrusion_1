@@ -225,6 +225,8 @@ https://www.movable-type.co.uk/scripts/sha256.html
 
 Now we should be able to connect with shh as laurie
 
+** IV ** laurie **
+
 $ ssh laurie@192.168.1.56
         ____                _______    _____
        |  _ \              |__   __|  / ____|
@@ -281,6 +283,8 @@ ce qui nous donne le mdp suivant:
 
 => Publicspeakingisveryeasy.126241207201b2149opekmq426135
 
+** V ** thor **
+
 laurie@BornToSecHackMe:~$ su thor
 Password: 
 thor@BornToSecHackMe:~$ ls
@@ -296,6 +300,8 @@ Il faut maintenant le digester en md5 pour obtenir le mdp de zaz
 https://www.freeformatter.com/message-digest.html#ad-output
 
 => 646da671ca01bb5d84dbb5fb2238dc8e
+
+** VI ** zaz **
 
 thor@BornToSecHackMe:~$ su zaz
 Password:
@@ -401,7 +407,7 @@ Breakpoint 1, 0x080483f7 in main ()
    0xbffff86c:	nop
    0xbffff86d:	nop
    0xbffff86e:	nop
-   0xbffff86f:	nop          <= Nous allons prendre cette adresse du slipe de nop
+   0xbffff86f:	nop          <= Nous allons prendre cette adresse du slide de nop
    0xbffff870:	nop
    0xbffff871:	nop
 (gdb) quit
