@@ -1,8 +1,10 @@
 ** I ** SCAN **
+---------------
+
 Nous allons chercher ip du serveur et le scanner, cf ./scans
 
 ** II ** EXPLOITATION **
-
+------------------------
 
 Apres avoir trouve les urls possible on trouve un forum,
 dedant il y a un post de l'utilisateur lmezard qui a un soucis de login
@@ -67,6 +69,7 @@ participant.
 ############################################
 
 ** III ** POSTEXPLOITATION
+--------------------------
 
 https://www.hackingarticles.in/shell-uploading-web-server-phpmyadmin/
 
@@ -226,6 +229,7 @@ https://www.movable-type.co.uk/scripts/sha256.html
 Now we should be able to connect with shh as laurie
 
 ** IV ** laurie **
+------------------
 
 $ ssh laurie@192.168.1.56
         ____                _______    _____
@@ -284,6 +288,7 @@ ce qui nous donne le mdp suivant:
 => Publicspeakingisveryeasy.126241207201b2149opekmq426135
 
 ** V ** thor **
+---------------
 
 laurie@BornToSecHackMe:~$ su thor
 Password: 
@@ -302,6 +307,7 @@ https://www.freeformatter.com/message-digest.html#ad-output
 => 646da671ca01bb5d84dbb5fb2238dc8e
 
 ** VI ** zaz **
+---------------
 
 thor@BornToSecHackMe:~$ su zaz
 Password:
